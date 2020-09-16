@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Destino } from '../models/Destino.model';
 
 @Component({
   selector: 'app-lista-destinos',
@@ -7,10 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListaDestinosComponent implements OnInit {
 
-  destinos: string[];
+  destinos: Destino[];
 
   constructor() {
-    this.destinos = ['Barcelona', 'Buenos Aires', 'Lima', 'Bogotá']
+    this.destinos = []; // initilize destinos array
+   }
+
+   guardar(nombre: string, url:string, imagenUrl: string): boolean {
+     if (!imagenUrl){
+      imagenUrl = "https://rockcontent.com/es/wp-content/uploads/2019/02/o-que-e-produto-no-mix-de-marketing-1280x720.png";
+     }
+    var destino = new Destino(nombre, url, imagenUrl);
+    this.destinos.push(destino);
+    return false;
    }
 
   ngOnInit(): void {

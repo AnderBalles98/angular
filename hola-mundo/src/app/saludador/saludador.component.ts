@@ -10,7 +10,7 @@ export class SaludadorComponent implements OnInit {
   constructor() { }
 
   saludar() {
-    alert("HOLAAA!!");
+    alert("HOLAAA MUNDOOOO!!");
   }
 
   ngOnInit(): void {

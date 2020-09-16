@@ -9,7 +9,7 @@ import { Destino } from '../models/Destino.model';
 export class DestinoViajeComponent implements OnInit {
 
   @Input() destino: Destino;
-  @HostBinding('attr.class') cssClass = 'col-md-4';
+  @HostBinding('attr.class') cssClass = 'destino-viaje';
 
   constructor() { 
    }

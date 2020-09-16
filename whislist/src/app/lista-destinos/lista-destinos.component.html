@@ -28,7 +28,9 @@
         </div>
     </div>
     <hr class="mb-5">
-    <div class="row row-flex">
-            <app-destino-viaje *ngFor="let destino of destinos" [destino]="destino"></app-destino-viaje>
-    </div>
+    <ul class="row row-flex">
+        <li *ngFor="let destino of destinos" class="col-md-4">
+            <app-destino-viaje [destino]="destino"></app-destino-viaje>
+        </li>
+    </ul>
 </div>

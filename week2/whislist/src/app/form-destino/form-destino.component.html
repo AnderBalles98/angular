@@ -1,20 +1,20 @@
 <form [formGroup]="formDestino" (ngSubmit)="createDestino()">
     <div class="form-group">
-        <div *ngIf="this.inputNombre.hasError('required')">Nombre Requerido</div>
-        <div *ngIf="this.inputNombre.hasError('minLen')">Pocos caracteres</div>
+        <div *ngIf="this.formDestino.controls['inputNombre'].hasError('required')">Nombre Requerido</div>
+        <div *ngIf="this.formDestino.controls['inputNombre'].hasError('minLen')">Pocos caracteres</div>
         <label for="nombre">Nombre</label>
-        <input type="text" class="form-control" id="nombre" placeholder="Ingresar nombre del producto..." required
-            [formControl]="this.inputNombre">
+        <input type="text" class="form-control" id="nombre" placeholder="Ingresar nombre del producto..."
+            [formControl]="this.formDestino.controls['inputNombre']">
         </div>
         <div class="form-group">
         <label for="url">Url</label>
-        <input type="text" class="form-control" id="url" placeholder="Ingresar url del producto..." required
-            [formControl]="inputUrl">
+        <input type="text" class="form-control" id="url" placeholder="Ingresar url del producto..."
+            [formControl]="this.formDestino.controls['inputUrl']">
     </div>
     <div class="form-group">
         <label for="url">Imagen Url (Opcional)</label>
         <input type="text" class="form-control" id="imagenUrl" placeholder="Ingresar url imagen del producto..."
-            [formControl]="inputImagenUrl">
+            [formControl]="this.formDestino.controls['inputImagenUrl']">
     </div>
     <button [disabled]="!formDestino.valid" type="submit" class="btn btn-primary">Guardar!</button>
 </form>

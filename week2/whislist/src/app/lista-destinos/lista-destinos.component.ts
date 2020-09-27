@@ -22,14 +22,14 @@ export class ListaDestinosComponent implements OnInit {
       return state.destinos.favorito;
     }).subscribe((destino) => {
       const fav = destino;
-      if(destino) {
+      if (destino) {
         this.updates.push("se ha añadido " + destino.getNombre());
       }
     });
-    
-   }
 
-   guardar(destino: Destino): void {
+  }
+
+  guardar(destino: Destino): void {
     this.destinoAPI.add(destino);
     this.destinos = this.destinoAPI.getDestinos();
     // console.log(destino);
@@ -37,7 +37,11 @@ export class ListaDestinosComponent implements OnInit {
 
     // this.destinos = this.destinoAPI.getDestinos();
     // this.store.dispatch(new NuevoDestinoAction(destino));
-   }
+  }
+
+  deleteDestino(destino: Destino): void {
+    this.destinoAPI.deleteDestino(destino);
+  }
 
   ngOnInit(): void {
     // this.destinoAPI.subscribeOnChange( (destino: Destino) => {

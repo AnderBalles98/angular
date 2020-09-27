@@ -2,7 +2,7 @@ import { Destino } from './Destino.model';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../app.module';
-import { NuevoDestinoAction, ElegidoFavoritoAction } from './destino-state.model';
+import { NuevoDestinoAction, ElegidoFavoritoAction, DeleteDestinoAction } from './destino-state.model';
 import { Injectable } from '@angular/core';
 
 
@@ -22,6 +22,10 @@ export class DestinoAPI {
 
     add(destino: Destino): void {
         this.store.dispatch(new NuevoDestinoAction(destino));
+    }
+
+    deleteDestino(destinoToDelete: Destino) {
+        this.store.dispatch(new DeleteDestinoAction(destinoToDelete));
     }
 
     getDestinos(): Destino[] {

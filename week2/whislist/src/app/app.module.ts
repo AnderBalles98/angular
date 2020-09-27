@@ -11,11 +11,18 @@ import { AppComponent } from './app.component';
 import { DestinoViajeComponent } from './destino-viaje/destino-viaje.component';
 import { ListaDestinosComponent } from './lista-destinos/lista-destinos.component';
 import { DestinoDetalleComponent } from './destino-detalle/destino-detalle.component';
-import { AppRouterModule } from './app-router.moduel';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { FormDestinoComponent } from './form-destino/form-destino.component';
 import { DestinoAPI } from './models/APIDestino.model';
 import { DestinosState, reducerDestinos, initializeDestinosState, DestinosEffects } from './models/destino-state.model';
+import { RouterModule, Routes } from "@angular/router";
+
+
+const routes: Routes = [
+  {path: "", redirectTo: "home", pathMatch: "full"},
+  {path: "home", component: ListaDestinosComponent},
+  {path: "destino", component: DestinoDetalleComponent}
+];
 
 
 // redux init
@@ -43,8 +50,8 @@ var reducersInitialState = {
   imports: [
     FormsModule,
     ReactiveFormsModule,
+    RouterModule.forRoot(routes),
     BrowserModule,
-    AppRouterModule,
     NgRxStoreModule.forRoot(reducers, {initialState: reducersInitialState, 
       runtimeChecks: { // Malditamente importante
         strictActionImmutability : false, 

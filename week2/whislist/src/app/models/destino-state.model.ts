@@ -27,11 +27,19 @@ export enum DestinosActionType {
     NUEVO_DESTINO = '[Destinos] Nuevo',
     ELEGIDO_FAVORITO = '[Destinos] Favorito',
     VOTE_UP = '[Destinos] VoteUp',
-    VOTE_DOWN = '[Destinos] VoteDown'
+    VOTE_DOWN = '[Destinos] VoteDown',
+    DELETE_DESTINO = '[Destinos] Delete'
 }
 
 export class NuevoDestinoAction implements Action {
     type = DestinosActionType.NUEVO_DESTINO;
+    constructor(public destino: Destino) {
+
+    }
+}
+
+export class DeleteDestinoAction implements Action {
+    type = DestinosActionType.DELETE_DESTINO;
     constructor(public destino: Destino) {
 
     }
@@ -86,7 +94,7 @@ export function reducerDestinos(state: DestinosState, action: DestinosActions): 
             }
         }
         case DestinosActionType.ELEGIDO_FAVORITO: {
-            console.log(state);
+            // console.log(state);
             state.items.forEach((destino: Destino) => {
                 destino.setIsSelected(false);
             });
@@ -95,6 +103,14 @@ export function reducerDestinos(state: DestinosState, action: DestinosActions): 
             return {
                 ...state,
                 favorito: fav
+            }
+        }
+        case DestinosActionType.DELETE_DESTINO: {
+            var destinoToDelete = (action as DeleteDestinoAction).destino;
+            const idx = state.items.indexOf(destinoToDelete);
+            state.items.splice(idx, 1);
+            return {
+                ...state
             }
         }
     }

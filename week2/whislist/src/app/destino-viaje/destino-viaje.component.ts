@@ -15,12 +15,17 @@ export class DestinoViajeComponent implements OnInit {
   @Input() idx: number;
   @HostBinding('attr.class') cssClass = 'destino-viaje';
   @Output() destinoEmmit: EventEmitter<Destino> = new EventEmitter();
+  @Output() deleteDestinoEmmit: EventEmitter<Destino> = new EventEmitter();
 
   constructor(private store: Store<AppState>) {
     
   }
 
   ngOnInit(): void {
+  }
+
+  deleteDestino():void {
+    this.deleteDestinoEmmit.emit(this.destino);
   }
 
   emmitDestino(): boolean {

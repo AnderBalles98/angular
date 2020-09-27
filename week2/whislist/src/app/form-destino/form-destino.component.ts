@@ -28,7 +28,7 @@ export class FormDestinoComponent implements OnInit {
 
   constructor() {
     this.formDestino.valueChanges.subscribe(function(form: FormGroup) {
-      console.log(form);
+      // console.log(form);
     });
   }
 

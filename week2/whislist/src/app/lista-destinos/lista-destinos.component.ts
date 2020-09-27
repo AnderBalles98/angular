@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Destino } from '../models/Destino.model';
 import { DestinoAPI } from '../models/APIDestino.model';
+import { Store } from '@ngrx/store';
+import { AppState } from '../app.module';
+import { ElegidoFavoritoAction, NuevoDestinoAction } from '../models/destino-state.model';
 
 @Component({
   selector: 'app-lista-destinos',
@@ -13,26 +16,38 @@ export class ListaDestinosComponent implements OnInit {
   updates: string[] = [];
 
 
-  constructor(private destinoAPI: DestinoAPI) {
+  constructor(private destinoAPI: DestinoAPI, private store: Store<AppState>) {
     this.destinos = []; // initilize destinos array
-    
-   }
-
-   guardar(destino: Destino): void {
-    this.destinos.push(destino);
-   }
-
-  ngOnInit(): void {
-    this.destinoAPI.subscribeOnChange( (destino: Destino) => {
-      console.log(this.destinos);
+    this.store.select((state) => {
+      // console.log(state);
+      this.destinos = state.destinos.items;
+      return state.destinos.favorito;
+    }).subscribe((destino) => {
+      const fav = destino;
       if(destino) {
         this.updates.push("se ha añadido " + destino.getNombre());
       }
     });
+   }
+
+   guardar(destino: Destino): void {
+    // this.destinoAPI.add(destino);
+    // console.log(destino);
+    // var nuevodes = new NuevoDestinoAction(destino);
+
+    // this.destinos = this.destinoAPI.getDestinos();
+    this.store.dispatch(new NuevoDestinoAction(destino));
+   }
+
+  ngOnInit(): void {
+    // this.destinoAPI.subscribeOnChange( (destino: Destino) => {
+    //   console.log(this.destinos);
+    // });
   }
 
   showDestinoSelected(destino: Destino): void {
-    this.destinoAPI.setDestinoSelected(destino);
+    // this.destinoAPI.setDestinoSelected(destino);
+    this.store.dispatch(new ElegidoFavoritoAction(destino));
   }
 
 }

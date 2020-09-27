@@ -2,7 +2,7 @@ export class Destino{
     private nombre: string;
     private imagenUrl: string;
     private url: string;
-    private isSelected: boolean;
+    public isSelected: boolean;
     private services: string[];
     private id: string;
 

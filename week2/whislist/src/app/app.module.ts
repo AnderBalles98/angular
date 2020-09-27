@@ -3,7 +3,10 @@ import { NgModule } from '@angular/core';
 
 import { StoreModule as NgRxStoreModule, ActionReducerMap } from "@ngrx/store";
 import { EffectsModule } from "@ngrx/effects";
- 
+import { StoreDevtoolsModule } from "@ngrx/store-devtools";
+
+
+
 import { AppComponent } from './app.component';
 import { DestinoViajeComponent } from './destino-viaje/destino-viaje.component';
 import { ListaDestinosComponent } from './lista-destinos/lista-destinos.component';
@@ -48,7 +51,8 @@ var reducersInitialState = {
         strictStateImmutability: false
       }
     }),
-    EffectsModule.forRoot([DestinosEffects])
+    EffectsModule.forRoot([DestinosEffects]),
+    StoreDevtoolsModule.instrument()
   ],
   providers: [
     DestinoAPI

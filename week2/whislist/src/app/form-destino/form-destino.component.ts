@@ -1,6 +1,9 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Destino } from '../models/Destino.model';
 import { FormGroup, FormControl, FormBuilder, Validators, ValidatorFn } from '@angular/forms';
+import { fromEvent } from 'rxjs';
+import { ajax } from 'rxjs/ajax';
+import { map, filter, debounceTime, distinctUntilChanged, switchMap} from "rxjs/operators";
 
 @Component({
   selector: 'app-form-destino',
@@ -21,12 +24,15 @@ export class FormDestinoComponent implements OnInit {
     inputUrl: this.inputUrl,
     inputImagenUrl: this.inputImagenUrl
   });
+  nombrePredicts: string[] = [];
 
   constructor() {
     this.formDestino.valueChanges.subscribe(function(form: FormGroup) {
       console.log(form);
     });
   }
+
+
 
   createDestino(): boolean {
     var nombre = this.inputNombre.value;
@@ -63,6 +69,24 @@ export class FormDestinoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const inputNombreHTMLElement = <HTMLInputElement>document.getElementById('nombre');
+    fromEvent(inputNombreHTMLElement, 'input') // se crea el evento input que se acciona al presionar una tecla
+      .pipe( // se analiza el flujo de datos
+        map(function (e: KeyboardEvent) { // recibe el evento y enviar el valor al siguiente argumento
+          return (e.target as HTMLInputElement).value
+        }),
+        filter(function (text) { // aplica los filtros y envia el valor al siguiente argumento
+          return text.length > 2;
+        }), 
+        debounceTime(500), // aplica un delay para avanzar, este delay se reinicia siempre que se actualize todo lo anterior
+        distinctUntilChanged(), // aplica una condicion para avanzat, la condicion es que si no hay cambios no avanza
+        switchMap(function () { // realiza un llamado aíncrono a un archivo
+          return ajax("/assets/datos.json");
+        })
+      ).subscribe((ajaxResponse) => {
+        this.nombrePredicts = ajaxResponse.response;
+      });
+
   }
 
 }

@@ -14,13 +14,8 @@ export class ListaDestinosComponent implements OnInit {
     this.destinos = []; // initilize destinos array
    }
 
-   guardar(nombre: string, url:string, imagenUrl: string): boolean {
-     if (!imagenUrl){
-      imagenUrl = "https://rockcontent.com/es/wp-content/uploads/2019/02/o-que-e-produto-no-mix-de-marketing-1280x720.png";
-     }
-    var destino = new Destino(nombre, url, imagenUrl);
+   guardar(destino: Destino): void {
     this.destinos.push(destino);
-    return false;
    }
 
   ngOnInit(): void {

@@ -9,6 +9,7 @@ import { Destino } from '../models/Destino.model';
 export class DestinoViajeComponent implements OnInit {
 
   @Input() destino: Destino;
+  @Input() idx: number;
   @HostBinding('attr.class') cssClass = 'destino-viaje';
   @Output() destinoEmmit: EventEmitter<Destino> = new EventEmitter();
 

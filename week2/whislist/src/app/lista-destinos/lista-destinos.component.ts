@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Destino } from '../models/Destino.model';
+import { DestinoAPI } from '../models/APIDestino.model';
 
 @Component({
   selector: 'app-lista-destinos',
@@ -9,9 +10,16 @@ import { Destino } from '../models/Destino.model';
 export class ListaDestinosComponent implements OnInit {
 
   destinos: Destino[];
+  updates: string[] = [];
 
-  constructor() {
+
+  constructor(private destinoAPI: DestinoAPI) {
     this.destinos = []; // initilize destinos array
+    this.destinoAPI.subscribeOnChange((destino: Destino) => {
+      if(destino) {
+        this.updates.push("se ha añadido " + destino.getNombre());
+      }
+    });
    }
 
    guardar(destino: Destino): void {
@@ -22,10 +30,7 @@ export class ListaDestinosComponent implements OnInit {
   }
 
   showDestinoSelected(destino: Destino): void {
-    this.destinos.forEach(function (destino) {
-      destino.setIsSelected(false);
-    });
-    destino.setIsSelected(true);
+    this.destinoAPI.setDestinoSelected(destino);
   }
 
 }

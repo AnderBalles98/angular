@@ -4,6 +4,7 @@ export class Destino{
     private url: string;
     private isSelected: boolean;
     private services: string[];
+    private id: string;
 
     constructor(nombre: string, url:string, imagenUrl: string){
         this.nombre = nombre;
@@ -12,6 +13,14 @@ export class Destino{
         this.isSelected = false;
         this.services = ['Arma tu PC', '¿Qué es la CPU?'];
         
+    }
+
+    getId(): string {
+      return this.id;
+    }
+
+    setId(id: string): void {
+      this.id = id;
     }
 
     getServices(): string[] {

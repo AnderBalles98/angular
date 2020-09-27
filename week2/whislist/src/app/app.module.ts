@@ -8,6 +8,7 @@ import { DestinoDetalleComponent } from './destino-detalle/destino-detalle.compo
 import { AppRouterModule } from './app-router.moduel';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { FormDestinoComponent } from './form-destino/form-destino.component';
+import { DestinoAPI } from './models/APIDestino.model';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +23,9 @@ import { FormDestinoComponent } from './form-destino/form-destino.component';
     BrowserModule,
     AppRouterModule
   ],
-  providers: [],
+  providers: [
+    DestinoAPI
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

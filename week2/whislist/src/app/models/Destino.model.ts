@@ -2,9 +2,10 @@ export class Destino{
     private nombre: string;
     private imagenUrl: string;
     private url: string;
-    public isSelected: boolean;
+    private isSelected: boolean;
     private services: string[];
     private id: string;
+    private votes: number; 
 
     constructor(nombre: string, url:string, imagenUrl: string){
         this.nombre = nombre;
@@ -12,7 +13,7 @@ export class Destino{
         this.url = url;
         this.isSelected = false;
         this.services = ['Arma tu PC', '¿Qué es la CPU?'];
-        
+        this.votes = 0;
     }
 
     getId(): string {
@@ -66,6 +67,18 @@ export class Destino{
 
     setIsSelected(isSelected: boolean): void {
       this.isSelected = isSelected;
+    }
+
+    getVotes(): number {
+      return this.votes;
+    }
+
+    voteUp(): void {
+      this.votes++;
+    }
+
+    voteDown(): void {
+      this.votes--;
     }
 
 }

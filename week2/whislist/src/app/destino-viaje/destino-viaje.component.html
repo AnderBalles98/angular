@@ -24,4 +24,9 @@
         <a href={{destino.getUrl()}} class="btn-card" (click)="emmitDestino()">VISITAR</a>
         <span [style.display]="!destino.getIsSelected() ? 'none': ''" >--Último Visitado--</span>
     </div>
+    <div>
+        <a href="#" (click)="voteUp()"><i class="material-icons md-18">thumb_up</i></a>
+        <a href="#" (click)="voteDown()"><i class="material-icons md-18">thumb_down</i></a>
+        {{this.destino.getVotes()}}
+    </div>
 </div>

@@ -25,7 +25,9 @@ export const initializeDestinosState = function () {
 
 export enum DestinosActionType {
     NUEVO_DESTINO = '[Destinos] Nuevo',
-    ELEGIDO_FAVORITO = '[Destinos] Favorito'
+    ELEGIDO_FAVORITO = '[Destinos] Favorito',
+    VOTE_UP = '[Destinos] VoteUp',
+    VOTE_DOWN = '[Destinos] VoteDown'
 }
 
 export class NuevoDestinoAction implements Action {
@@ -42,7 +44,21 @@ export class ElegidoFavoritoAction implements Action {
     }
 }
 
-export type DestinosActions = NuevoDestinoAction | ElegidoFavoritoAction;
+export class VoteUpAction implements Action {
+    type = DestinosActionType.VOTE_UP
+    constructor(public destino: Destino) {
+
+    }
+}
+
+export class VoteDownAction implements Action {
+    type = DestinosActionType.VOTE_DOWN
+    constructor(public destino: Destino) {
+
+    }
+}
+
+export type DestinosActions = NuevoDestinoAction | ElegidoFavoritoAction | VoteDownAction | VoteUpAction;
 
 // REDUCERS
 
@@ -53,6 +69,20 @@ export function reducerDestinos(state: DestinosState, action: DestinosActions): 
             return { // modificar el state
                 ...state, // no se modifica el resto del state
                 items: [...state.items, (action as NuevoDestinoAction).destino] // se modifica state.items
+            }
+        }
+        case DestinosActionType.VOTE_UP: {
+            var destino: Destino = (action as VoteUpAction).destino;
+            destino.voteUp();
+            return {
+                ...state
+            }
+        }
+        case DestinosActionType.VOTE_DOWN: {
+            var destino: Destino = (action as VoteUpAction).destino;
+            destino.voteDown();
+            return {
+                ...state
             }
         }
         case DestinosActionType.ELEGIDO_FAVORITO: {

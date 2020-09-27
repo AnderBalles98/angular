@@ -1,42 +1,35 @@
 import { Destino } from './Destino.model';
 import { Subject, BehaviorSubject } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from '../app.module';
+import { NuevoDestinoAction, ElegidoFavoritoAction } from './destino-state.model';
+import { Injectable } from '@angular/core';
 
 
 // Se crea una subscripcion a un observable que ejecuta una funcion cuando cambia su valor
+@Injectable()
 export class DestinoAPI {
+
     private destinos: Destino[] = [];
-    current: Subject<Destino> = new BehaviorSubject<Destino>(null); // este es un observable
 
-constructor() {
+    constructor(private store: Store<AppState>) {
+        this.store.select((state: AppState) => {
+            return state.destinos.items;
+        }).subscribe((destinos: Destino[]) => {
+            this.destinos = destinos;
+        });
+    }
 
-}
+    add(destino: Destino): void {
+        this.store.dispatch(new NuevoDestinoAction(destino));
+    }
 
-add(destino: Destino): void {
-    this.destinos.push(destino);
-}
+    getDestinos(): Destino[] {
+        return this.destinos;
+    }
 
-getDestinos(): Destino[] {
-    return this.destinos;
-}
-
-getById(id: string): Destino {
-    return this.destinos.filter(function (destino: Destino) {
-        return destino.getId() === id;
-    })[0];
-}
-
-setDestinoSelected(destino: Destino) {
-    this.destinos.forEach(function (destino) {
-        destino.setIsSelected(false);
-    });
-
-    destino.setIsSelected(true);
-
-    this.current.next(destino);
-}
-
-subscribeOnChange(callback) { // esta es la subscripcion
-    this.current.subscribe(callback);
-}
+    setDestinoSelected(destino: Destino) {
+        this.store.dispatch(new ElegidoFavoritoAction(destino));
+    }
 
 }

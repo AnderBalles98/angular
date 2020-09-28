@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { ListaDestinosComponent } from './lista-destinos/lista-destinos.component';
-import { DestinoDetalleComponent } from './destino-detalle/destino-detalle.component';
+import { ListaDestinosComponent } from './components/lista-destinos/lista-destinos.component';
+import { DestinoDetalleComponent } from './components/destino-detalle/destino-detalle.component';
 
 import { RouterModule, Routes } from "@angular/router";
 

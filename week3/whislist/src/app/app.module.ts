@@ -8,12 +8,12 @@ import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 
 
 import { AppComponent } from './app.component';
-import { DestinoViajeComponent } from './destino-viaje/destino-viaje.component';
-import { ListaDestinosComponent } from './lista-destinos/lista-destinos.component';
-import { DestinoDetalleComponent } from './destino-detalle/destino-detalle.component';
+import { DestinoViajeComponent } from './components/destino-viaje/destino-viaje.component';
+import { ListaDestinosComponent } from './components/lista-destinos/lista-destinos.component';
+import { DestinoDetalleComponent } from './components/destino-detalle/destino-detalle.component';
 import { AppRouterModule } from './app-router.moduel';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { FormDestinoComponent } from './form-destino/form-destino.component';
+import { FormDestinoComponent } from './components/form-destino/form-destino.component';
 import { DestinoAPI } from './models/APIDestino.model';
 import { DestinosState, reducerDestinos, initializeDestinosState, DestinosEffects } from './models/destino-state.model';
 

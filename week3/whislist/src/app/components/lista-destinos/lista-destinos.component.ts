@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Destino } from '../models/Destino.model';
-import { DestinoAPI } from '../models/APIDestino.model';
+import { Destino } from '../../models/Destino.model';
+import { DestinoAPI } from '../../models/APIDestino.model';
 import { Store } from '@ngrx/store';
-import { AppState } from '../app.module';
+import { AppState } from '../../app.module';
 
 @Component({
   selector: 'app-lista-destinos',

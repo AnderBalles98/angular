@@ -11,7 +11,7 @@ export class DestinoAPI {
 
     private destinos: Destino[] = [];
 
-    constructor(private store: Store<AppState>,@Inject(forwardRef(() => APP_CONFIG)) private config: AppConfig,
+    constructor(private store: Store<AppState>, @Inject(forwardRef(() => APP_CONFIG)) private config: AppConfig,
                 private http: HttpClient) {
         this.store.select((state: AppState) => {
             return state.destinos.items;

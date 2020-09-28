@@ -6,7 +6,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { LoginComponent } from './components/login/login.component';
 import { ProtectedComponent } from './components/protected/protected.component';
 import { UserLogedGuard } from './guards/user-loged.guard';
-import { routes as vuelosRoutes } from './components/vuelos/vuelos-router.module';
+import { routes as vuelosRoutes } from './components/vuelos/vuelos-routing.module';
 import { VuelosComponent } from './components/vuelos/vuelos/vuelos.component';
 
 const routes: Routes = [
@@ -15,8 +15,7 @@ const routes: Routes = [
     {path: "destino/:id", component: DestinoDetalleComponent},
     {path: "login", component: LoginComponent},
     {path: "protected", component: ProtectedComponent, canActivate: [UserLogedGuard]},
-    {path: "vuelos", component: VuelosComponent, canActivate: [UserLogedGuard], children: vuelosRoutes},
-    {path: "**", redirectTo: "home"}
+    {path: "vuelos", component: VuelosComponent, canActivate: [UserLogedGuard], children: vuelosRoutes}
   ];
 
 @NgModule({
@@ -27,4 +26,4 @@ const routes: Routes = [
       RouterModule
     ]
   })
-  export class AppRouterModule { }
+  export class AppRoutingModule { }

@@ -11,11 +11,11 @@ import { AppComponent } from './app.component';
 import { DestinoViajeComponent } from './components/destino-viaje/destino-viaje.component';
 import { ListaDestinosComponent } from './components/lista-destinos/lista-destinos.component';
 import { DestinoDetalleComponent } from './components/destino-detalle/destino-detalle.component';
-import { AppRouterModule } from './app-router.moduel';
+import { AppRoutingModule } from './app-routing.moduel';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { FormDestinoComponent } from './components/form-destino/form-destino.component';
-import { DestinoAPI } from './models/APIDestino.model';
-import { DestinosState, reducerDestinos, initializeDestinosState, DestinosEffects } from './models/destino-state.model';
+import { DestinoAPI } from './models/destino/APIDestino.model';
+import { DestinosState, reducerDestinos, initializeDestinosState, DestinosEffects } from './models/destino/destino-state.model';
 import { LoginComponent } from './components/login/login.component';
 import { ProtectedComponent } from './components/protected/protected.component';
 import { UserLogedGuard } from './guards/user-loged.guard';
@@ -24,6 +24,7 @@ import { VuelosComponent } from './components/vuelos/vuelos/vuelos.component';
 import { VuelosMainComponent } from './components/vuelos/vuelos-main/vuelos-main.component';
 import { VuelosMoreInfoComponent } from './components/vuelos/vuelos-more-info/vuelos-more-info.component';
 import { VuelosDetailComponent } from './components/vuelos/vuelos-detail/vuelos-detail.component';
+import { ReservasModule } from './components/reservas/reservas.module';
 
 
 // redux init
@@ -58,7 +59,7 @@ var reducersInitialState = {
     FormsModule,
     ReactiveFormsModule,
     BrowserModule,
-    AppRouterModule,
+    AppRoutingModule,
     NgRxStoreModule.forRoot(reducers, {initialState: reducersInitialState, 
       runtimeChecks: { // Malditamente importante
         strictActionImmutability : false, 
@@ -66,7 +67,8 @@ var reducersInitialState = {
       }
     }),
     EffectsModule.forRoot([DestinosEffects]),
-    StoreDevtoolsModule.instrument()
+    StoreDevtoolsModule.instrument(),
+    ReservasModule
   ],
   providers: [
     DestinoAPI,

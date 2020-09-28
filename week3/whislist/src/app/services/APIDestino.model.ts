@@ -1,7 +1,7 @@
 import { Destino } from '../models/Destino.model';
 import {HttpClient, HttpClientModule, HttpHeaders, HttpRequest, HttpResponse} from '@angular/common/http';
 import { Store } from '@ngrx/store';
-import {APP_CONFIG, AppCongif, AppState} from '../app.module';
+import {APP_CONFIG, AppCongif, AppState, db} from '../app.module';
 import { NuevoDestinoAction, ElegidoFavoritoAction } from '../models/destino-state.model';
 import {forwardRef, Inject, inject, Injectable} from '@angular/core';
 
@@ -26,6 +26,12 @@ export class DestinoAPI {
     this.http.request(req).subscribe((data: HttpResponse<{}>) => {
       if (data.status === 200) {
         this.store.dispatch(new NuevoDestinoAction(d));
+        const myDB = db;
+        myDB.destinos.add(d);
+        console.log('Destino añadido a la base de datos');
+        myDB.destinos.toArray().then((destinos) => { // Obtener la tabla destinos de la base de datos
+          console.log(destinos);
+        })
       }
     });
   }

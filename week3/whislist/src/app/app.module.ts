@@ -31,6 +31,10 @@ import {VuelosMainComponent} from './components/vuelos/vuelos-main/vuelos-main.c
 import {VuelosMoreInfoComponent} from './components/vuelos/vuelos-more-info/vuelos-more-info.component';
 import {VuelosDetailComponent} from './components/vuelos/vuelos-detail/vuelos-detail.component';
 import {ReservasModule} from './components/reservas/reservas.module';
+import {Destino} from './models/Destino.model';
+
+// dexie
+import Dexie from 'dexie';
 
 // app init
 export function init_app(appLoadService: AppLoadService): () => Promise<any> {
@@ -44,11 +48,34 @@ class AppLoadService {
 
   async intializeDestinosViajesState(): Promise<any> {
     const headers: HttpHeaders = new HttpHeaders({'X-API-TOKEN': 'token-seguridad'});
-    const req = new HttpRequest('GET', APP_CONFIG_VALUES.apiEndpoint + '/my', { headers });
+    const req = new HttpRequest('GET', APP_CONFIG_VALUES.apiEndpoint + '/my', {headers});
     const response: any = await this.http.request(req).toPromise();
     this.store.dispatch(new InitMyDataAction(response.body));
   }
 }
+
+// dexie db
+export class Translation {
+  constructor(public id: number, public lang: string, public key: string, public value: string) {
+  }
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class MyDatabase extends Dexie {
+  destinos: Dexie.Table<Destino, number>;
+  translations: Dexie.Table<Translation, number>;
+
+  constructor() {
+    super('WishListDataBase');
+    this.version(1).stores({
+      destinos: '++id, nombre, url, imagenUrl'
+    });
+  }
+}
+
+export const db = new MyDatabase();
 
 // app config
 export interface AppCongif {

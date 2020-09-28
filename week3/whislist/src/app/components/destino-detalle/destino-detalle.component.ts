@@ -1,30 +1,23 @@
-import {Component, OnInit, InjectionToken, Inject, Injectable} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { DestinoAPI } from '../../services/APIDestino.model';
-import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/app.module';
-import { Destino } from 'src/app/models/Destino.model';
-
-interface AppConfig {
-  apiEndpoint: string;
-}
-const APP_CONFIG_VALUE: AppConfig = {
-  apiEndpoint: 'mi_api.com'
-};
-const APP_CONFIG = new InjectionToken<AppConfig>('app.config');
-
+import {Component, OnInit, InjectionToken, Inject, Injectable, inject, forwardRef} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {DestinoAPI} from '../../services/APIDestino.model';
+import {Store} from '@ngrx/store';
+import {APP_CONFIG, AppCongif, AppState} from 'src/app/app.module';
+import {Destino} from 'src/app/models/Destino.model';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable()
-class DestinosApiDecorated extends DestinoAPI {
-  constructor(@Inject(APP_CONFIG) private config: AppConfig, store: Store<AppState>) {
-    super(store);
+  class DestinosApiDecorated extends DestinoAPI {
+    constructor(store: Store<AppState>, config: AppCongif, http: HttpClient) {
+      super(store, config, http);
+    }
+
+    getById(id: string): Destino {
+      console.log('llamando por la clase decorada!');
+      return super.getById(id);
+    }
   }
-  getById(id: string): Destino {
-    console.log('llamando por la clase decorada!');
-    console.log('config: ' + this.config.apiEndpoint);
-    return super.getById(id);
-  }
-}
+
 
 
 class DestinosApiViejo {
@@ -39,10 +32,9 @@ class DestinosApiViejo {
   templateUrl: './destino-detalle.component.html',
   styleUrls: ['./destino-detalle.component.scss'],
   providers: [
-    { provide: DestinoAPI, useClass: DestinosApiDecorated },
-    { provide: DestinosApiViejo, useExisting: DestinoAPI },
-    { provide: APP_CONFIG, useValue: APP_CONFIG_VALUE }
-  ],
+    {provide: DestinoAPI, useClass: DestinosApiDecorated},
+    {provide: DestinosApiViejo, useExisting: DestinoAPI},
+  ]
 })
 export class DestinoDetalleComponent implements OnInit {
 

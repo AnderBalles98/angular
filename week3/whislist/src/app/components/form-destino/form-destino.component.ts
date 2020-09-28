@@ -4,7 +4,7 @@ import {FormGroup, FormControl, FormBuilder, Validators, ValidatorFn} from '@ang
 import {fromEvent} from 'rxjs';
 import {ajax} from 'rxjs/ajax';
 import {map, filter, debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {APP_CONFIG, AppCongif} from "../../app.module";
+import {APP_CONFIG, AppCongif} from '../../app.module';
 
 @Component({
   selector: 'app-form-destino',
@@ -14,10 +14,12 @@ import {APP_CONFIG, AppCongif} from "../../app.module";
 export class FormDestinoComponent implements OnInit {
 
   @Output() destino: EventEmitter<Destino> = new EventEmitter();
+
   inputNombre: FormControl = new FormControl('', Validators.compose([
     Validators.required,
     this.minLenValidator(3)
   ]));
+
   inputImagenUrl: FormControl = new FormControl('');
   inputUrl: FormControl = new FormControl('', Validators.required);
   formDestino: FormGroup = new FormGroup({
@@ -26,6 +28,7 @@ export class FormDestinoComponent implements OnInit {
     inputImagenUrl: this.inputImagenUrl
   });
   nombrePredicts: string[] = [];
+
 
   constructor(@Inject(forwardRef(() => APP_CONFIG)) private config: AppCongif) {
     this.formDestino.valueChanges.subscribe((form: FormGroup) => {
@@ -69,7 +72,7 @@ export class FormDestinoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const inputNombreHTMLElement = <HTMLInputElement> document.getElementById('nombre');
+    const inputNombreHTMLElement = <HTMLInputElement>document.getElementById('nombre');
     fromEvent(inputNombreHTMLElement, 'input') // se crea el evento input que se acciona al presionar una tecla
       .pipe( // se analiza el flujo de datos
         map((e: KeyboardEvent) => { // recibe el evento y enviar el valor al siguiente argumento

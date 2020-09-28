@@ -1,31 +1,54 @@
-import { BrowserModule } from '@angular/platform-browser';
-import {InjectionToken, NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {APP_INITIALIZER, Injectable, InjectionToken, NgModule} from '@angular/core';
 
-import { StoreModule as NgRxStoreModule, ActionReducerMap } from "@ngrx/store";
-import { EffectsModule } from "@ngrx/effects";
-import { StoreDevtoolsModule } from "@ngrx/store-devtools";
+import {StoreModule as NgRxStoreModule, ActionReducerMap, Store} from '@ngrx/store';
+import {EffectsModule} from '@ngrx/effects';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 
+// http client
+import {HttpClient, HttpClientModule, HttpHeaders, HttpRequest} from '@angular/common/http';
 
+import {AppComponent} from './app.component';
+import {DestinoViajeComponent} from './components/destino-viaje/destino-viaje.component';
+import {ListaDestinosComponent} from './components/lista-destinos/lista-destinos.component';
+import {DestinoDetalleComponent} from './components/destino-detalle/destino-detalle.component';
+import {AppRoutingModule} from './app-routing.moduel';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormDestinoComponent} from './components/form-destino/form-destino.component';
+import {
+  DestinosState,
+  reducerDestinos,
+  initializeDestinosState,
+  DestinosEffects,
+  InitMyDataAction
+} from './models/destino-state.model';
+import {LoginComponent} from './components/login/login.component';
+import {ProtectedComponent} from './components/protected/protected.component';
+import {UserLogedGuard} from './guards/user-loged.guard';
+import {AuthService} from './services/auth.service';
+import {VuelosComponent} from './components/vuelos/vuelos/vuelos.component';
+import {VuelosMainComponent} from './components/vuelos/vuelos-main/vuelos-main.component';
+import {VuelosMoreInfoComponent} from './components/vuelos/vuelos-more-info/vuelos-more-info.component';
+import {VuelosDetailComponent} from './components/vuelos/vuelos-detail/vuelos-detail.component';
+import {ReservasModule} from './components/reservas/reservas.module';
 
-import { AppComponent } from './app.component';
-import { DestinoViajeComponent } from './components/destino-viaje/destino-viaje.component';
-import { ListaDestinosComponent } from './components/lista-destinos/lista-destinos.component';
-import { DestinoDetalleComponent } from './components/destino-detalle/destino-detalle.component';
-import { AppRoutingModule } from './app-routing.moduel';
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { FormDestinoComponent } from './components/form-destino/form-destino.component';
-import { DestinosState, reducerDestinos, initializeDestinosState, DestinosEffects } from './models/destino-state.model';
-import { LoginComponent } from './components/login/login.component';
-import { ProtectedComponent } from './components/protected/protected.component';
-import { UserLogedGuard } from './guards/user-loged.guard';
-import { AuthService } from './services/auth.service';
-import { VuelosComponent } from './components/vuelos/vuelos/vuelos.component';
-import { VuelosMainComponent } from './components/vuelos/vuelos-main/vuelos-main.component';
-import { VuelosMoreInfoComponent } from './components/vuelos/vuelos-more-info/vuelos-more-info.component';
-import { VuelosDetailComponent } from './components/vuelos/vuelos-detail/vuelos-detail.component';
-import { ReservasModule } from './components/reservas/reservas.module';
+// app init
+export function init_app(appLoadService: AppLoadService): () => Promise<any> {
+  return () => appLoadService.intializeDestinosViajesState();
+}
 
+@Injectable()
+class AppLoadService {
+  constructor(private store: Store<AppState>, private http: HttpClient) {
+  }
 
+  async intializeDestinosViajesState(): Promise<any> {
+    const headers: HttpHeaders = new HttpHeaders({'X-API-TOKEN': 'token-seguridad'});
+    const req = new HttpRequest('GET', APP_CONFIG_VALUES.apiEndpoint + '/my', { headers });
+    const response: any = await this.http.request(req).toPromise();
+    this.store.dispatch(new InitMyDataAction(response.body));
+  }
+}
 
 // app config
 export interface AppCongif {
@@ -69,11 +92,13 @@ const reducersInitialState = {
   imports: [
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
-    NgRxStoreModule.forRoot(reducers, {initialState: reducersInitialState,
+    NgRxStoreModule.forRoot(reducers, {
+      initialState: reducersInitialState,
       runtimeChecks: { // Malditamente importante
-        strictActionImmutability : false,
+        strictActionImmutability: false,
         strictStateImmutability: false
       }
     }),
@@ -84,7 +109,14 @@ const reducersInitialState = {
   providers: [
     AuthService,
     UserLogedGuard,
-    {provide: APP_CONFIG, useValue: APP_CONFIG_VALUES}
+    {provide: APP_CONFIG, useValue: APP_CONFIG_VALUES},
+    AppLoadService,
+    {
+      provide: APP_INITIALIZER, /*Nativo de Angular, inizializa con la aplicación*/
+      useFactory: init_app,
+      deps: [AppLoadService],
+      multi: true /*Neceario para tener multiples inicializaciones*/
+    }
   ],
   bootstrap: [AppComponent]
 })

@@ -1,18 +1,18 @@
 import { Destino } from '../models/Destino.model';
-import { Subject, BehaviorSubject } from 'rxjs';
+import {HttpClient, HttpClientModule, HttpHeaders, HttpRequest, HttpResponse} from '@angular/common/http';
 import { Store } from '@ngrx/store';
-import { AppState } from '../app.module';
+import {APP_CONFIG, AppCongif, AppState} from '../app.module';
 import { NuevoDestinoAction, ElegidoFavoritoAction } from '../models/destino-state.model';
-import { Injectable } from '@angular/core';
+import {forwardRef, Inject, inject, Injectable} from '@angular/core';
 
 
-// Se crea una subscripcion a un observable que ejecuta una funcion cuando cambia su valor
 @Injectable()
 export class DestinoAPI {
 
     private destinos: Destino[] = [];
 
-    constructor(private store: Store<AppState>) {
+    constructor(private store: Store<AppState>,@Inject(forwardRef(() => APP_CONFIG)) private config: AppCongif,
+                private http: HttpClient) {
         this.store.select((state: AppState) => {
             return state.destinos.items;
         }).subscribe((destinos: Destino[]) => {
@@ -20,9 +20,15 @@ export class DestinoAPI {
         });
     }
 
-    add(destino: Destino): void {
-        this.store.dispatch(new NuevoDestinoAction(destino));
-    }
+  add(d: Destino): void {
+    const headers: HttpHeaders = new HttpHeaders({'X-API-TOKEN': 'token-seguridad'});
+    const req = new HttpRequest('POST', this.config.apiEndpoint + '/my', { nuevo: d }, { headers });
+    this.http.request(req).subscribe((data: HttpResponse<{}>) => {
+      if (data.status === 200) {
+        this.store.dispatch(new NuevoDestinoAction(d));
+      }
+    });
+  }
 
     getDestinos(): Destino[] {
         return this.destinos;

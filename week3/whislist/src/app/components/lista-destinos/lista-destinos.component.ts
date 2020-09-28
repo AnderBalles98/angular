@@ -20,19 +20,19 @@ export class ListaDestinosComponent implements OnInit {
     this.destinos = []; // initilize destinos array
     this.store.select((state) => {
       // console.log(state);
+      this.destinos = destinoAPI.getDestinos();
       return state.destinos.favorito;
     }).subscribe((destino) => {
       const fav = destino;
-      if(destino) {
+      if (destino) {
         this.updates.push('se ha añadido ' + destino.getNombre());
       }
     });
-    this.destinos = destinoAPI.getDestinos();
    }
 
    guardar(destino: Destino): void {
     this.destinoAPI.add(destino);
-    this.destinos = this.destinoAPI.getDestinos();
+    // this.destinos = this.destinoAPI.getDestinos();
     // console.log(destino);
     // var nuevodes = new NuevoDestinoAction(destino);
 

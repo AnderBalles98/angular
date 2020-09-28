@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Destino } from '../../models/destino/Destino.model';
+import { Destino } from '../../models/Destino.model';
 import { FormGroup, FormControl, FormBuilder, Validators, ValidatorFn } from '@angular/forms';
 import { fromEvent } from 'rxjs';
 import { ajax } from 'rxjs/ajax';

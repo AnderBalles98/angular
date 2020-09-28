@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Destino } from '../../models/destino/Destino.model';
-import { DestinoAPI } from '../../models/destino/APIDestino.model';
+import { Destino } from '../../models/Destino.model';
+import { DestinoAPI } from '../../services/APIDestino.model';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.module';
 

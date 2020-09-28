@@ -1,8 +1,8 @@
-import { Destino } from './Destino.model';
+import { Destino } from '../models/Destino.model';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../app.module';
-import { NuevoDestinoAction, ElegidoFavoritoAction } from './destino-state.model';
+import { AppState } from '../app.module';
+import { NuevoDestinoAction, ElegidoFavoritoAction } from '../models/destino-state.model';
 import { Injectable } from '@angular/core';
 
 

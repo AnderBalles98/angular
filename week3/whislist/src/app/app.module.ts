@@ -14,8 +14,8 @@ import { DestinoDetalleComponent } from './components/destino-detalle/destino-de
 import { AppRoutingModule } from './app-routing.moduel';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { FormDestinoComponent } from './components/form-destino/form-destino.component';
-import { DestinoAPI } from './models/destino/APIDestino.model';
-import { DestinosState, reducerDestinos, initializeDestinosState, DestinosEffects } from './models/destino/destino-state.model';
+import { DestinoAPI } from './services/APIDestino.model';
+import { DestinosState, reducerDestinos, initializeDestinosState, DestinosEffects } from './models/destino-state.model';
 import { LoginComponent } from './components/login/login.component';
 import { ProtectedComponent } from './components/protected/protected.component';
 import { UserLogedGuard } from './guards/user-loged.guard';

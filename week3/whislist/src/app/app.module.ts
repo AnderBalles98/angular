@@ -16,6 +16,14 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { FormDestinoComponent } from './components/form-destino/form-destino.component';
 import { DestinoAPI } from './models/APIDestino.model';
 import { DestinosState, reducerDestinos, initializeDestinosState, DestinosEffects } from './models/destino-state.model';
+import { LoginComponent } from './components/login/login.component';
+import { ProtectedComponent } from './components/protected/protected.component';
+import { UserLogedGuard } from './guards/user-loged.guard';
+import { AuthService } from './services/auth.service';
+import { VuelosComponent } from './components/vuelos/vuelos/vuelos.component';
+import { VuelosMainComponent } from './components/vuelos/vuelos-main/vuelos-main.component';
+import { VuelosMoreInfoComponent } from './components/vuelos/vuelos-more-info/vuelos-more-info.component';
+import { VuelosDetailComponent } from './components/vuelos/vuelos-detail/vuelos-detail.component';
 
 
 // redux init
@@ -25,11 +33,11 @@ export interface AppState {
 
 var reducers: ActionReducerMap<AppState> = {
   destinos: reducerDestinos
-}
+};
 
 var reducersInitialState = {
   destinos: initializeDestinosState()
-}
+};
 
 
 @NgModule({
@@ -38,7 +46,13 @@ var reducersInitialState = {
     DestinoViajeComponent,
     ListaDestinosComponent,
     DestinoDetalleComponent,
-    FormDestinoComponent
+    FormDestinoComponent,
+    LoginComponent,
+    ProtectedComponent,
+    VuelosComponent,
+    VuelosMainComponent,
+    VuelosMoreInfoComponent,
+    VuelosDetailComponent
   ],
   imports: [
     FormsModule,
@@ -55,7 +69,9 @@ var reducersInitialState = {
     StoreDevtoolsModule.instrument()
   ],
   providers: [
-    DestinoAPI
+    DestinoAPI,
+    AuthService,
+    UserLogedGuard
   ],
   bootstrap: [AppComponent]
 })

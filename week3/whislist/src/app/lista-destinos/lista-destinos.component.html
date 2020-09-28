@@ -1,0 +1,31 @@
+<h1>ESTA ES UNA PRUEBA</h1>
+<div class="container	content">
+    <div class="row">
+        <div class="col-md-6	offset-md-3">
+            <span class="anchor" id="formLogin"></span>
+            <!-- form	card	login	with	validation	feedback	-->
+            <div class="card	card-outline-secondary">
+                <div class="card-header">
+                    <h3 class="mb-0">Añade un producto a tu lista de deseos</h3>
+                </div>
+                <div class="card-body">
+                    <app-form-destino (destino)="guardar($event)"></app-form-destino>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="mb-5">
+    <ul class="row row-flex">
+        <li *ngFor="let destino of destinos; let idx=index" class="col-md-4">
+            <app-destino-viaje [destino]="destino" [idx]="idx+1" (destinoEmmit)="showDestinoSelected($event)"></app-destino-viaje>
+        </li>
+    </ul>
+    <div class="row row-fles">
+        <h5>Actividad</h5>
+        <ul>
+            <li *ngFor="let update of this.updates">
+                {{update}}
+            </li>
+        </ul>
+    </div>
+</div>

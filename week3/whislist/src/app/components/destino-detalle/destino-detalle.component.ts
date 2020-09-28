@@ -2,13 +2,13 @@ import {Component, OnInit, InjectionToken, Inject, Injectable, inject, forwardRe
 import {ActivatedRoute} from '@angular/router';
 import {DestinoAPI} from '../../services/APIDestino.model';
 import {Store} from '@ngrx/store';
-import {APP_CONFIG, AppCongif, AppState} from 'src/app/app.module';
+import {APP_CONFIG, AppConfig, AppState} from 'src/app/app.module';
 import {Destino} from 'src/app/models/Destino.model';
 import {HttpClient} from '@angular/common/http';
 
 @Injectable()
   class DestinosApiDecorated extends DestinoAPI {
-    constructor(store: Store<AppState>, config: AppCongif, http: HttpClient) {
+    constructor(store: Store<AppState>, config: AppConfig, http: HttpClient) {
       super(store, config, http);
     }
 

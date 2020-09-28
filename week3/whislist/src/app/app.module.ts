@@ -5,6 +5,10 @@ import {StoreModule as NgRxStoreModule, ActionReducerMap, Store} from '@ngrx/sto
 import {EffectsModule} from '@ngrx/effects';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 
+
+// translate
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+
 // http client
 import {HttpClient, HttpClientModule, HttpHeaders, HttpRequest} from '@angular/common/http';
 
@@ -32,6 +36,8 @@ import {VuelosMoreInfoComponent} from './components/vuelos/vuelos-more-info/vuel
 import {VuelosDetailComponent} from './components/vuelos/vuelos-detail/vuelos-detail.component';
 import {ReservasModule} from './components/reservas/reservas.module';
 import {Destino} from './models/Destino.model';
+import {from, Observable} from 'rxjs';
+import {flatMap} from 'rxjs/operators';
 
 // dexie
 import Dexie from 'dexie';
@@ -69,24 +75,76 @@ export class MyDatabase extends Dexie {
 
   constructor() {
     super('WishListDataBase');
+    // El manejo de versiones se usa para actualizar la base de datos sin perjudicar al cliente
     this.version(1).stores({
       destinos: '++id, nombre, url, imagenUrl'
+    });
+    this.version(2).stores({
+      destinos: '++id, nombre, url, imagenUrl',
+      translations: '++id, lang, key, value'
     });
   }
 }
 
+
+// i18n ini
+class TranslationLoader implements TranslateLoader {
+  constructor(private http: HttpClient) {
+  }
+
+  getTranslation(lang: string): Observable<any> {
+    const promise = db.translations
+      .where('lang')
+      .equals(lang)
+      .toArray()
+      .then(results => {
+        if (results.length === 0) {
+          return this.http
+            .get<Translation[]>(APP_CONFIG_VALUES.apiEndpoint + '/api/translation?lang=' + lang)
+            .toPromise()
+            .then(apiResults => {
+              db.translations.bulkAdd(apiResults);
+              return apiResults;
+            });
+        }
+        return results;
+      }).then((traducciones) => {
+        console.log('traducciones cargadas:');
+        console.log(traducciones);
+        return traducciones;
+      }).then((traducciones) => {
+        return traducciones.map((t) => ({[t.key]: t.value}));
+      });
+
+    // return from(promise).pipe(
+    //   map((traducciones) => traducciones.map((t) => {
+    //     [t.key]: t.value}))
+    // );
+
+    return from(promise).pipe(flatMap((elems) => {
+      console.log('elems: ', elems);
+      return from(elems);
+    }));
+  }
+}
+
+function HttpLoaderFactory(http: HttpClient): TranslateLoader {
+  return new TranslationLoader(http);
+}
+
+
 export const db = new MyDatabase();
 
 // app config
-export interface AppCongif {
+export interface AppConfig {
   apiEndpoint: string;
 }
 
-const APP_CONFIG_VALUES: AppCongif = {
+const APP_CONFIG_VALUES: AppConfig = {
   apiEndpoint: 'http://localhost:3000'
 };
 
-export const APP_CONFIG = new InjectionToken<AppCongif>('app.config');
+export const APP_CONFIG = new InjectionToken<AppConfig>('app.config');
 
 // redux init
 export interface AppState {
@@ -131,6 +189,13 @@ const reducersInitialState = {
     }),
     EffectsModule.forRoot([DestinosEffects]),
     StoreDevtoolsModule.instrument(),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
     ReservasModule
   ],
   providers: [

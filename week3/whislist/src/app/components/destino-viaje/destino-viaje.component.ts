@@ -1,8 +1,8 @@
-import { Component, OnInit, Input, HostBinding, Output, EventEmitter } from '@angular/core';
-import { Destino } from '../../models/Destino.model';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../app.module';
-import { VoteUpAction, VoteDownAction } from '../../models/destino-state.model';
+import {Component, OnInit, Input, HostBinding, Output, EventEmitter} from '@angular/core';
+import {Destino} from '../../models/Destino.model';
+import {Store} from '@ngrx/store';
+import {AppState} from '../../app.module';
+import {VoteUpAction, VoteDownAction} from '../../models/destino-state.model';
 
 @Component({
   selector: 'app-destino-viaje',
@@ -17,7 +17,7 @@ export class DestinoViajeComponent implements OnInit {
   @Output() destinoEmmit: EventEmitter<Destino> = new EventEmitter();
 
   constructor(private store: Store<AppState>) {
-    
+
   }
 
   ngOnInit(): void {
@@ -32,7 +32,7 @@ export class DestinoViajeComponent implements OnInit {
     this.store.dispatch(new VoteUpAction(this.destino));
     return false;
   }
-  
+
   voteDown(): boolean {
     this.store.dispatch(new VoteDownAction(this.destino));
     return false;

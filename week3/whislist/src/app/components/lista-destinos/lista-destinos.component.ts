@@ -7,7 +7,8 @@ import { AppState } from '../../app.module';
 @Component({
   selector: 'app-lista-destinos',
   templateUrl: './lista-destinos.component.html',
-  styleUrls: ['./lista-destinos.component.scss']
+  styleUrls: ['./lista-destinos.component.scss'],
+  providers: [DestinoAPI]
 })
 export class ListaDestinosComponent implements OnInit {
 
@@ -23,10 +24,10 @@ export class ListaDestinosComponent implements OnInit {
     }).subscribe((destino) => {
       const fav = destino;
       if(destino) {
-        this.updates.push("se ha añadido " + destino.getNombre());
+        this.updates.push('se ha añadido ' + destino.getNombre());
       }
     });
-    
+    this.destinos = destinoAPI.getDestinos();
    }
 
    guardar(destino: Destino): void {

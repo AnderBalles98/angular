@@ -28,7 +28,13 @@ export class DestinoAPI {
         return this.destinos;
     }
 
-    setDestinoSelected(destino: Destino) {
+    getById(id: string): Destino {
+        return this.destinos.filter((destino) => {
+            return destino.getId() === id;
+        })[0];
+    }
+
+    setDestinoSelected(destino: Destino): void {
         this.store.dispatch(new ElegidoFavoritoAction(destino));
     }
 

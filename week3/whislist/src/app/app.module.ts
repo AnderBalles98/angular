@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {InjectionToken, NgModule} from '@angular/core';
 
 import { StoreModule as NgRxStoreModule, ActionReducerMap } from "@ngrx/store";
 import { EffectsModule } from "@ngrx/effects";
@@ -14,7 +14,6 @@ import { DestinoDetalleComponent } from './components/destino-detalle/destino-de
 import { AppRoutingModule } from './app-routing.moduel';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { FormDestinoComponent } from './components/form-destino/form-destino.component';
-import { DestinoAPI } from './services/APIDestino.model';
 import { DestinosState, reducerDestinos, initializeDestinosState, DestinosEffects } from './models/destino-state.model';
 import { LoginComponent } from './components/login/login.component';
 import { ProtectedComponent } from './components/protected/protected.component';
@@ -27,16 +26,28 @@ import { VuelosDetailComponent } from './components/vuelos/vuelos-detail/vuelos-
 import { ReservasModule } from './components/reservas/reservas.module';
 
 
+
+// app config
+export interface AppCongif {
+  apiEndpoint: string;
+}
+
+const APP_CONFIG_VALUES: AppCongif = {
+  apiEndpoint: 'http://localhost:3000'
+};
+
+export const APP_CONFIG = new InjectionToken<AppCongif>('app.config');
+
 // redux init
 export interface AppState {
   destinos: DestinosState;
 }
 
-var reducers: ActionReducerMap<AppState> = {
+const reducers: ActionReducerMap<AppState> = {
   destinos: reducerDestinos
 };
 
-var reducersInitialState = {
+const reducersInitialState = {
   destinos: initializeDestinosState()
 };
 
@@ -60,9 +71,9 @@ var reducersInitialState = {
     ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
-    NgRxStoreModule.forRoot(reducers, {initialState: reducersInitialState, 
+    NgRxStoreModule.forRoot(reducers, {initialState: reducersInitialState,
       runtimeChecks: { // Malditamente importante
-        strictActionImmutability : false, 
+        strictActionImmutability : false,
         strictStateImmutability: false
       }
     }),
@@ -71,13 +82,13 @@ var reducersInitialState = {
     ReservasModule
   ],
   providers: [
-    DestinoAPI,
     AuthService,
-    UserLogedGuard
+    UserLogedGuard,
+    {provide: APP_CONFIG, useValue: APP_CONFIG_VALUES}
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { 
-  
+export class AppModule {
+
 
 }

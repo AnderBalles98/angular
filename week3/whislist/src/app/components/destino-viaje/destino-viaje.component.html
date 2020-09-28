@@ -29,4 +29,5 @@
         <a href="#" (click)="voteDown()"><i class="material-icons md-18">thumb_down</i></a>
         {{this.destino.getVotes()}}
     </div>
+    <a [routerLink]="['/destino', destino.getId()]">ver</a>
 </div>

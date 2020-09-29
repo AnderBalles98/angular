@@ -31,6 +31,9 @@ import {VuelosMainComponent} from './components/vuelos/vuelos-main/vuelos-main.c
 import {VuelosMoreInfoComponent} from './components/vuelos/vuelos-more-info/vuelos-more-info.component';
 import {VuelosDetailComponent} from './components/vuelos/vuelos-detail/vuelos-detail.component';
 import {ReservasModule} from './components/reservas/reservas.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EspiameDirective } from './directives/espiame.directive';
+
 
 // app init
 export function init_app(appLoadService: AppLoadService): () => Promise<any> {
@@ -87,12 +90,14 @@ const reducersInitialState = {
     VuelosComponent,
     VuelosMainComponent,
     VuelosMoreInfoComponent,
-    VuelosDetailComponent
+    VuelosDetailComponent,
+    EspiameDirective
   ],
   imports: [
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
     NgRxStoreModule.forRoot(reducers, {

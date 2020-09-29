@@ -3,9 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/angular.iml" filepath="$PROJECT_DIR$/.idea/angular.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../app-mobile-development/.idea/app-mobile-development.iml" filepath="$PROJECT_DIR$/../app-mobile-development/.idea/app-mobile-development.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../back-end-development/.idea/back-end-development.iml" filepath="$PROJECT_DIR$/../back-end-development/.idea/back-end-development.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../bootstrap4/.idea/bootstrap4.iml" filepath="$PROJECT_DIR$/../bootstrap4/.idea/bootstrap4.iml" />
     </modules>
   </component>
 </project>

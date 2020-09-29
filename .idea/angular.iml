@@ -8,8 +8,5 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="app-mobile-development" />
-    <orderEntry type="module" module-name="back-end-development" />
-    <orderEntry type="module" module-name="bootstrap4" />
   </component>
 </module>

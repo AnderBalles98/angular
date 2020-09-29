@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +9,13 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'whislist';
 
-  mostrarContenido(contenido: string) {
-    alert(contenido);
+  constructor(public translate: TranslateService) {
+    console.log('get translation');
+    this.translate.getTranslation('en').subscribe((x) => {
+      console.log('x: ' + JSON.stringify(x));
+    });
+    this.translate.setDefaultLang('es');
   }
+
 
 }

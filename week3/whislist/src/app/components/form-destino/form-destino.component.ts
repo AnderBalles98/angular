@@ -4,7 +4,7 @@ import {FormGroup, FormControl, FormBuilder, Validators, ValidatorFn} from '@ang
 import {fromEvent} from 'rxjs';
 import {ajax} from 'rxjs/ajax';
 import {map, filter, debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {APP_CONFIG, AppCongif} from '../../app.module';
+import {APP_CONFIG, AppConfig} from '../../app.module';
 
 @Component({
   selector: 'app-form-destino',
@@ -30,7 +30,7 @@ export class FormDestinoComponent implements OnInit {
   nombrePredicts: string[] = [];
 
 
-  constructor(@Inject(forwardRef(() => APP_CONFIG)) private config: AppCongif) {
+  constructor(@Inject(forwardRef(() => APP_CONFIG)) private config: AppConfig) {
     this.formDestino.valueChanges.subscribe((form: FormGroup) => {
       // console.log(form);
     });

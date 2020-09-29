@@ -71,13 +71,13 @@ export class InitMyDataAction implements Action {
   }
 }
 
-export class ClickOn implements Action {
+export class ClickOnAction implements Action {
   type = DestinosActionType.CLICK_ON;
   constructor() {
   }
 }
 
-export type DestinosActions = NuevoDestinoAction | ElegidoFavoritoAction | VoteDownAction | VoteUpAction | InitMyDataAction | ClickOn;
+export type DestinosActions = NuevoDestinoAction | ElegidoFavoritoAction | VoteDownAction | VoteUpAction | InitMyDataAction | ClickOnAction;
 
 // REDUCERS
 

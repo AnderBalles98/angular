@@ -2,7 +2,7 @@ import {Directive, ElementRef} from '@angular/core';
 import {fromEvent} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {AppState} from '../app.module';
-import {ClickOn} from '../models/destino-state.model';
+import {ClickOnAction} from '../models/destino-state.model';
 
 @Directive({
   selector: '[appTrackearClick]'
@@ -17,7 +17,7 @@ export class TrackearClickDirective {
 
   track(evento: Event): void {
     const elemTags = this.element.attributes.getNamedItem('data-trackear-tags').value.split(' ');
-    this.store.dispatch(new ClickOn());
+    this.store.dispatch(new ClickOnAction());
     console.log(`||||||||||| track evento: "${elemTags}"`);
   }
 }

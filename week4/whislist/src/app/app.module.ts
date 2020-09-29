@@ -33,6 +33,7 @@ import {VuelosDetailComponent} from './components/vuelos/vuelos-detail/vuelos-de
 import {ReservasModule} from './components/reservas/reservas.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EspiameDirective } from './directives/espiame.directive';
+import { TrackearClickDirective } from './directives/trackear-click.directive';
 
 
 // app init
@@ -91,7 +92,8 @@ const reducersInitialState = {
     VuelosMainComponent,
     VuelosMoreInfoComponent,
     VuelosDetailComponent,
-    EspiameDirective
+    EspiameDirective,
+    TrackearClickDirective
   ],
   imports: [
     FormsModule,

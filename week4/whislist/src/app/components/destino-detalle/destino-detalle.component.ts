@@ -59,15 +59,19 @@ export class DestinoDetalleComponent implements OnInit {
       zoom: 15 // starting zoom
     });
 
-    let marker = new mapboxgl.Marker({
-      draggable: true
-    })
-      .setLngLat([-74.0785939, 4.6010792]) // starting position [lng, lat]
+    let marker = new mapboxgl.Marker({})
+      .setLngLat([-74.0785939, 4.6010792])// starting position [lng, lat]
       .addTo(this.map); // add the marker to the map
 
-    marker.on('dragend', () => {
+    let popup = new mapboxgl.Popup({}).setText('Hola mundo');
+
+    marker.setPopup(popup);
+
+    marker.on('click', () => {
       console.log('lng, lat:', marker.getLngLat());
     });
+
+
   }
 
 }

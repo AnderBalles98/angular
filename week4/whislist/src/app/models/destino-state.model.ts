@@ -11,13 +11,15 @@ export interface DestinosState {
   items: Destino[];
   loading: boolean;
   favorito: Destino;
+  clicks: number;
 }
 
 export const initializeDestinosState = () => {
   return {
     items: [],
     loading: false,
-    favorito: null
+    favorito: null,
+    clicks: 0
   };
 };
 
@@ -28,7 +30,8 @@ export enum DestinosActionType {
   ELEGIDO_FAVORITO = '[Destinos] Favorito',
   VOTE_UP = '[Destinos] VoteUp',
   VOTE_DOWN = '[Destinos] VoteDown',
-  INIT_MY_DATA = '[Destinos] Init My Data'
+  INIT_MY_DATA = '[Destinos] Init My Data',
+  CLICK_ON = '[Destinos] Click On Event'
 }
 
 export class NuevoDestinoAction implements Action {
@@ -68,7 +71,13 @@ export class InitMyDataAction implements Action {
   }
 }
 
-export type DestinosActions = NuevoDestinoAction | ElegidoFavoritoAction | VoteDownAction | VoteUpAction | InitMyDataAction;
+export class ClickOn implements Action {
+  type = DestinosActionType.CLICK_ON;
+  constructor() {
+  }
+}
+
+export type DestinosActions = NuevoDestinoAction | ElegidoFavoritoAction | VoteDownAction | VoteUpAction | InitMyDataAction | ClickOn;
 
 // REDUCERS
 
@@ -114,6 +123,13 @@ export function reducerDestinos(state: DestinosState, action: DestinosActions): 
         items: destinos.map((destino: any) => {
           return new Destino(destino.id, destino.nombre, destino.url, destino.imagenUrl);
         })
+      };
+    }
+    case DestinosActionType.CLICK_ON: {
+      console.log(state.clicks);
+      return {
+        ...state,
+        clicks: ++state.clicks
       };
     }
   }

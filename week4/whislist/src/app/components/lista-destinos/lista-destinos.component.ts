@@ -14,13 +14,14 @@ export class ListaDestinosComponent implements OnInit {
 
   destinos: Destino[];
   updates: string[] = [];
-
+  clicks: number;
 
   constructor(private destinoAPI: DestinoAPI, private store: Store<AppState>) {
     this.destinos = []; // initilize destinos array
     this.store.select((state) => {
       // console.log(state);
       this.destinos = destinoAPI.getDestinos();
+      this.clicks = state.destinos.clicks;
       return state.destinos.favorito;
     }).subscribe((destino) => {
       const fav = destino;
